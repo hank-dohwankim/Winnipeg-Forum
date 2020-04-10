@@ -1,0 +1,42 @@
+﻿@model WinnipegForum.Models.Post.PostIndexModel
+
+<h1>@Model.Title</h1>
+
+<div>
+    Authoer : @Model.AuthorName (@Model.AuthorRating)
+    Created : @Model.Created
+</div>
+
+<div>
+    @Model.PostContent
+</div>
+
+@if (Model.PostReplies.Any())
+{
+    foreach(var reply in Model.PostReplies)
+    {
+        <div>
+            <div>
+                Reply Author : @reply.AuthorName
+                Reply Created : @reply.Created
+            </div>
+            <div>
+                Reply : @reply.ReplyContent
+            </div>
+            <div>
+                @foreach (var reReply in Model.ReplyReplies)
+                {
+                    <div>
+                        ReReply Parents :  @reReply.PostReplyId
+                        ReReply Author : @reReply.AuthorName
+                        ReReply Created : @reReply.Created
+                    </div>
+                    <div>
+                        ReReply : @reReply.ReplyContent
+                    </div>
+                }
+            </div>
+        </div>
+
+    }
+}

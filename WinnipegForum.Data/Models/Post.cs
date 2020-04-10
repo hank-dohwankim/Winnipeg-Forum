@@ -11,7 +11,7 @@ namespace WinnipegForum.Data.Models
         public DateTime Created { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-        public virtual Forum Froum { get; set; }
+        public virtual Forum Forum { get; set; }
 
         public virtual IEnumerable<PostReply> PostReplies { get; set; }
         public virtual IEnumerable<ReplyReply> ReplyReplies { get; set; }

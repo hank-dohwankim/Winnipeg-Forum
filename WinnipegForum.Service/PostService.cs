@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 using WinnipegForum.Data;
 using WinnipegForum.Data.Models;
@@ -9,6 +10,12 @@ namespace WinnipegForum.Service
 {
     public class PostService : IPost
     {
+        private readonly ApplicationDbContext _dbContext;
+        public PostService(ApplicationDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public Task Add(Post post)
         {
             throw new NotImplementedException();
@@ -41,12 +48,24 @@ namespace WinnipegForum.Service
 
         public Post GetById(int id)
         {
-            throw new NotImplementedException();
+            return _dbContext.Posts.Where(post => post.Id == id)
+                .Include(post => post.User)
+                .Include(post => post.PostReplies).ThenInclude(reply => reply.User)
+                .Include(post => post.ReplyReplies).ThenInclude(reply => reply.User)
+                .Include(post => post.Forum)
+                .First();
         }
 
         public IEnumerable<Post> GetFilteredPosts(string searchQuery)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Post> GetPostsByForum(int id)
+        {
+            return _dbContext.Forums
+                .Where(forum => forum.Id == id).First()
+                .Posts;
         }
     }
 }

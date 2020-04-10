@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WinnipegForum.Data;
 
 namespace WinnipegForum.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200410074912_update application user")]
+    partial class updateapplicationuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -274,7 +276,7 @@ namespace WinnipegForum.Data.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ForumId")
+                    b.Property<int?>("FroumId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -285,7 +287,7 @@ namespace WinnipegForum.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ForumId");
+                    b.HasIndex("FroumId");
 
                     b.HasIndex("UserId");
 
@@ -396,9 +398,9 @@ namespace WinnipegForum.Data.Migrations
 
             modelBuilder.Entity("WinnipegForum.Data.Models.Post", b =>
                 {
-                    b.HasOne("WinnipegForum.Data.Models.Forum", "Forum")
+                    b.HasOne("WinnipegForum.Data.Models.Forum", "Froum")
                         .WithMany("Posts")
-                        .HasForeignKey("ForumId");
+                        .HasForeignKey("FroumId");
 
                     b.HasOne("WinnipegForum.Data.Models.ApplicationUser", "User")
                         .WithMany()

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WinnipegForum.Data.Models;
 
@@ -16,6 +17,5 @@ namespace WinnipegForum.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReply> PostReplies { get; set; }
         public DbSet<ReplyReply> ReplyReplies { get; set; }
-
     }
 }

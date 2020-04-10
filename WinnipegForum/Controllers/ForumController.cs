@@ -44,6 +44,7 @@ namespace WinnipegForum.Controllers
                 Id = post.Id,
                 AuthorId = post.User.Id,
                 AuthorRating = post.User.Rating,
+                AuthorName = post.User.UserName,
                 Title = post.Title,
                 DatePosted = post.Created.ToString(),
                 RepliesCount = post.ReplyReplies.Count() + post.ReplyReplies.Count(),

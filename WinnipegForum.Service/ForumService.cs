@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WinnipegForum.Data;
 using WinnipegForum.Data.Models;
@@ -37,7 +38,13 @@ namespace WinnipegForum.Service
 
         public Forum GetById(int id)
         {
-            throw new NotImplementedException();
+            var forum = _dbContext.Forums.Where(forum => forum.Id == id)
+                .Include(f => f.Posts).ThenInclude(p => p.User)
+                .Include(f => f.Posts).ThenInclude(p =>p.PostReplies).ThenInclude(r => r.User)
+                .Include(f => f.Posts).ThenInclude(p =>p.ReplyReplies).ThenInclude(r => r.User)
+                .FirstOrDefault();
+
+            return forum;
         }
 
         public Task UpdateForumDescription(int forumId, string newDescription)

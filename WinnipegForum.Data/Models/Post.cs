@@ -13,6 +13,7 @@ namespace WinnipegForum.Data.Models
         public virtual ApplicationUser User { get; set; }
         public virtual Forum Froum { get; set; }
 
-        public virtual IEnumerable<PostReply> Replies { get; set; }
+        public virtual IEnumerable<PostReply> PostReplies { get; set; }
+        public virtual IEnumerable<ReplyReply> ReplyReplies { get; set; }
     }
 }

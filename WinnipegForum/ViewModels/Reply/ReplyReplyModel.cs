@@ -1,6 +1,4 @@
-﻿using WinnipegForum.Models.Post.Reply;
-
-namespace WinnipegForum.Models.Post
+﻿namespace WinnipegForum.ViewModels.Reply
 {
     public class ReplyReplyModel : PostReplyModel
     {

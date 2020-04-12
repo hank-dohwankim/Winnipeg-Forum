@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using WinnipegForum.Data;
 using WinnipegForum.Data.Models;
 using WinnipegForum.Models.Post;
-using WinnipegForum.Models.Post.Reply;
 using WinnipegForum.ViewModels.Post;
+using WinnipegForum.ViewModels.Reply;
 
 namespace WinnipegForum.Controllers
 {

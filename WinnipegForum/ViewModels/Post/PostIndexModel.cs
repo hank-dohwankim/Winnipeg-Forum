@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WinnipegForum.Models.Post.Reply;
+using WinnipegForum.ViewModels.Reply;
 
 namespace WinnipegForum.Models.Post
 {

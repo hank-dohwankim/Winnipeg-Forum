@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WinnipegForum.Models.Post.Reply
+namespace WinnipegForum.ViewModels.Reply
 {
     public class PostReplyModel
     {
@@ -9,10 +9,17 @@ namespace WinnipegForum.Models.Post.Reply
         public string AuthorName { get; set; }
         public int AuthorRating { get; set; }
         public string AuthorImageUrl { get; set; }
-        public DateTime Created { get; set; }
-        public string ReplyContent { get; set; }
         public bool IsAuthorAdmin { get; set; }
 
+        public DateTime Created { get; set; }
+        public string ReplyContent { get; set; }
+
         public int PostId { get; set; }
+        public string PostTitle { get; set; }
+        public string PostContent { get; set; }
+
+        public int ForumId { get; set; }
+        public string ForumName { get; set; }
+        public string ForumImageUrl { get; set; }
     }
 }

@@ -22,14 +22,16 @@ namespace WinnipegForum.Service
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task AddPostReply(PostReply postReply)
+        public async Task AddPostReply(PostReply postReply)
         {
-            throw new NotImplementedException();
+            _dbContext.PostReplies.Add(postReply);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task AddReplyReply(ReplyReply replyReply)
+        public async Task AddReplyReply(ReplyReply replyReply)
         {
-            throw new NotImplementedException();
+            _dbContext.ReplyReplies.Add(replyReply);
+            await _dbContext.SaveChangesAsync();
         }
 
         public Task Delete(int id)

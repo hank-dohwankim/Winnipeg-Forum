@@ -16,14 +16,17 @@ namespace WinnipegForum.Service
             _dbContext = dbContext;
         }
 
-        public Task Create(Forum forum)
+        public async Task Create(Forum forum)
         {
-            throw new NotImplementedException();
+            _dbContext.Add(forum);
+            await _dbContext.SaveChangesAsync();
         }
 
-        public Task Delete(int forumId)
+        public async Task Delete(int forumId)
         {
-            throw new NotImplementedException();
+            var forum = GetById(forumId);
+            _dbContext.Remove(forum);
+            await _dbContext.SaveChangesAsync();
         }
 
         public IEnumerable<Forum> GetAll()
@@ -40,8 +43,8 @@ namespace WinnipegForum.Service
         {
             var forum = _dbContext.Forums.Where(forum => forum.Id == id)
                 .Include(f => f.Posts).ThenInclude(p => p.User)
-                .Include(f => f.Posts).ThenInclude(p =>p.PostReplies).ThenInclude(r => r.User)
-                .Include(f => f.Posts).ThenInclude(p =>p.ReplyReplies).ThenInclude(r => r.User)
+                .Include(f => f.Posts).ThenInclude(p => p.PostReplies).ThenInclude(r => r.User)
+                .Include(f => f.Posts).ThenInclude(p => p.ReplyReplies).ThenInclude(r => r.User)
                 .FirstOrDefault();
 
             return forum;

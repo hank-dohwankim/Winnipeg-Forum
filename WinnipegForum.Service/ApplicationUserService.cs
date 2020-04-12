@@ -12,9 +12,9 @@ namespace WinnipegForum.Service
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public ApplicationUserService(ApplicationDbContext context)
+        public ApplicationUserService(ApplicationDbContext dbContext)
         {
-            _dbContext = context;
+            _dbContext = dbContext;
         }
 
         public async Task Add(ApplicationUser user)

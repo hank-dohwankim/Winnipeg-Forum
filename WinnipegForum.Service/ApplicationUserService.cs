@@ -40,17 +40,31 @@ namespace WinnipegForum.Service
             return _dbContext.ApplicationUsers;
         }
 
-        public ApplicationUser GetById(string id)
+        public ApplicationUser GetById(string userId)
         {
-            return _dbContext.ApplicationUsers.FirstOrDefault(user => user.Id == id);
+            return _dbContext.ApplicationUsers.FirstOrDefault(user => user.Id == userId);
         }
 
-        public async Task IncrementRating(string id)
+        public async Task UpdateUserRating(string userId, Type type)
         {
-            var user = GetById(id);
-            user.Rating += 1;
-            _dbContext.Update(user);
+            var user = GetById(userId);
+            user.Rating = CalculateUserRating(type, user.Rating);
             await _dbContext.SaveChangesAsync();
+        }
+
+        private int CalculateUserRating(Type type, int userRating)
+        {
+            var inc = 0;
+
+            if(type == typeof(Post))
+            {
+                inc = 1;
+            }
+            if(type == typeof(PostReply))
+            {
+                inc = 3;
+            }
+            return userRating + inc;
         }
 
         public async Task SetProfileImage(string id, Uri uri)
@@ -61,29 +75,12 @@ namespace WinnipegForum.Service
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task BumpRating(string userId, Type type)
-        {
-            var user = GetById(userId);
-            var increment = GetIncrement(type);
-            user.Rating += increment;
-            await _dbContext.SaveChangesAsync();
-        }
-
-        private static int GetIncrement(Type type)
-        {
-            var bump = 0;
-
-            if (type == typeof(Post))
-            {
-                bump = 3;
-            }
-
-            if (type == typeof(PostReply))
-            {
-                bump = 2;
-            }
-
-            return bump;
-        }
+        //public async Task BumpRating(string userId, Type type)
+        //{
+        //    var user = GetById(userId);
+        //    var increment = GetIncrement(type);
+        //    user.Rating += increment;
+        //    await _dbContext.SaveChangesAsync();
+        //}
     }
 }

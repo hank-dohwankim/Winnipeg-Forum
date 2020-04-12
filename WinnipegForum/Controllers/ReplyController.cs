@@ -11,11 +11,13 @@ namespace WinnipegForum.Controllers
     public class ReplyController : Controller
     {
         private readonly IPost _postService;
+        private readonly IApplicationUser _userService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public ReplyController(IPost postService, UserManager<ApplicationUser> userManager)
+        public ReplyController(IPost postService, IApplicationUser userService, UserManager<ApplicationUser> userManager)
         {
             _postService = postService;
+            _userService = userService;
             _userManager = userManager;
         }
 
@@ -54,6 +56,8 @@ namespace WinnipegForum.Controllers
             var reply = BuildReply(model, user);
 
             await _postService.AddPostReply(reply);
+            await _userService.UpdateUserRating(userId, typeof(PostReply));
+
             return RedirectToAction("Index", "Post", new { id = model.PostId });
         }
 

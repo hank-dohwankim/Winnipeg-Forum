@@ -16,11 +16,14 @@ namespace WinnipegForum.Controllers
     {
         private readonly IForum _forumService;
         private readonly IPost _postService;
+        private readonly IApplicationUser _userService;
+
         private static UserManager<ApplicationUser> _userManager;
-        public PostController(IPost postService, IForum forumService, UserManager<ApplicationUser> userManager)
+        public PostController(IPost postService, IForum forumService, IApplicationUser userService, UserManager<ApplicationUser> userManager)
         {
             _postService = postService;
             _forumService = forumService;
+            _userService = userService;
             _userManager = userManager;
         }
 
@@ -101,7 +104,8 @@ namespace WinnipegForum.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             var post = BuildPost(model, user);
 
-            _postService.Add(post).Wait();
+            await _postService.Add(post);
+            await _userService.UpdateUserRating(userId, typeof(Post))
 
             return RedirectToAction("Index", "Post", new { id = post.Id });
         }

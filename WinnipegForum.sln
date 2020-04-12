@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinnipegForum", "WinnipegFo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinnipegForum.Data", "WinnipegForum.Data\WinnipegForum.Data.csproj", "{4B03F680-71E3-4DCD-A8D5-E07010DD8173}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinnipegForum.Service", "WinnipegForum.Service\WinnipegForum.Service.csproj", "{09EE9329-847B-49BB-A49F-3103E281559A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinnipegForum.Service", "WinnipegForum.Service\WinnipegForum.Service.csproj", "{09EE9329-847B-49BB-A49F-3103E281559A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

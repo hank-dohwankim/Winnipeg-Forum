@@ -1,16 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+using WinnipegForum.Data;
+using WinnipegForum.Data.Models;
+using WinnipegForum.Models.Forum;
+using WinnipegForum.Models.Post;
+using WinnipegForum.ViewModels.Search;
 
 namespace WinnipegForum.Controllers
 {
     public class SearchController : Controller
     {
-        public IActionResult Index()
+        private readonly IPost _postService;
+
+        public SearchController(IPost postService)
         {
-            return View();
+            _postService = postService;
+        }
+
+        public IActionResult Results(string searchQuery)
+        {
+            var posts = _postService.GetFilteredPosts(searchQuery);
+            var areNoResults = (!string.IsNullOrEmpty(searchQuery) && !posts.Any());
+            var postListings = posts.Select(post => new PostListingModel
+            {
+                Id = post.Id,
+                AuthorId = post.User.Id,
+                AuthorName = post.User.UserName,
+                AuthorRating = post.User.Rating,
+                Title = post.Title,
+                DatePosted = post.Created.ToString(),
+                RepliesCount = post.ReplyReplies.Count() + post.PostReplies.Count(),
+                Forum = BuildForumListing(post)
+            });
+
+            var model = new SearchResultModel
+            {
+                Posts = postListings,
+                SearchQuery = searchQuery,
+                EmptySearchResults = areNoResults
+            };
+            
+            return View(model);
+        }
+
+        private ForumListingModel BuildForumListing(Post post)
+        {
+            var forum = post.Forum;
+            return new ForumListingModel
+            {
+                Id = forum.Id,
+                ImageUrl = forum.ImageUrl,
+                Name = forum.Title,
+                Description = forum.Description
+            };
+        }
+
+        [HttpPost]
+        public IActionResult Search(string searchQuery)
+        {
+            return RedirectToAction("Results", new { searchQuery });
         }
     }
 }

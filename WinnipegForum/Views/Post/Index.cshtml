@@ -1,5 +1,91 @@
 ﻿@model WinnipegForum.Models.Post.PostIndexModel
 
+<div>
+    <span class="postIndexTitle">
+        @Model.Title
+    </span>
+    <span id="headingBtn"><a asp-controller="Forum" asp-action="Subject" asp-route-id="@Model.ForumId" class="btn btn-back">Back to @Model.ForumName</a></span>
+</div>
+
+<div>
+    <a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">
+        @Model.AuthorName
+    </a>
+    <span class="postData">@Model.Created</span>
+    @if (Model.IsAuthorAdmin)
+    {
+        <span class="isAdmin smaller">Admin</span>
+    }
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <span>
+            <a asp-controller="Reply" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-newReply">
+                Post Reply
+            </a>
+        </span>
+    </div>
+}
+@if (Model.PostReplies.Any())
+{
+    foreach (var reply in Model.PostReplies)
+    {
+        <div class="row replyContent">
+            <div class="col-md-3 replyAuthorContainer">
+                <a asp-controller="Profile" asp-action="Detail" asp-route-id="@reply.AuthorId">
+                    @reply.AuthorName
+                </a>
+                @if (reply.IsAuthorAdmin)
+                {
+                    <div class="isAdmin smaller">Admin</div>
+                    <br />
+                }
+                <span>@reply.Created</span>
+            </div>
+            <div class="col-md-9 replyContentContainer">
+                <div class="postContent">
+                    @Html.Raw(reply.ReplyContent)
+                </div>
+            </div>
+        </div>
+        foreach (var reReply in Model.ReplyReplies)
+        {
+            <div class="row replyContent">
+                <div class="col-md-3 replyAuthorContainer">
+                    <a asp-controller="Profile" asp-action="Detail" asp-route-id="@reReply.AuthorId">
+                        @reReply.AuthorName
+                    </a>
+                    @if (reReply.IsAuthorAdmin)
+                    {
+                        <div class="isAdmin smaller">Admin</div>
+                        <br />
+                    }
+                    <span>@reReply.Created</span>
+                </div>
+                <div class="col-md-9 replyContentContainer">
+                    <div class="postContent">
+                        @Html.Raw(reReply.ReplyContent)
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    <div class="noPosts">
+        <h3>
+            No replies in this post.
+        </h3>
+    </div>
+}
+
+<div>
+    @Html.Raw(Model.PostContent);
+</div>>
+
 <h1>@Model.Title</h1>
 
 <div>
@@ -13,7 +99,7 @@
 
 @if (Model.PostReplies.Any())
 {
-    foreach(var reply in Model.PostReplies)
+    foreach (var reply in Model.PostReplies)
     {
         <div>
             <div>

@@ -40,11 +40,16 @@ namespace WinnipegForum.Controllers
                 AuthorRating = post.User.Rating,
                 PostContent = post.Content,
                 PostReplies = postReplies,
-                ReplyReplies = replyReplies
+                ReplyReplies = replyReplies,
+                ForumId = post.Forum.Id,
+                ForumName = post.Forum.Title,
+                IsAuthorAdmin = IsAuthorAdmin(post.User)
             };
 
             return View(model);
         }
+
+       
 
         private IEnumerable<ReplyReplyModel> BuildReplyReplies(IEnumerable<ReplyReply> replyReplies)
         {
@@ -56,7 +61,8 @@ namespace WinnipegForum.Controllers
                 AuthorImageUrl = reply.User.ProfileImageUrl,
                 AuthorRating = reply.User.Rating,
                 Created = reply.Created,
-                ReplyContent = reply.Content
+                ReplyContent = reply.Content,
+                IsAuthorAdmin = IsAuthorAdmin(reply.User)
             });
         }
 
@@ -70,7 +76,8 @@ namespace WinnipegForum.Controllers
                 AuthorImageUrl = reply.User.ProfileImageUrl,
                 AuthorRating = reply.User.Rating,
                 Created = reply.Created,
-                ReplyContent = reply.Content
+                ReplyContent = reply.Content,
+                IsAuthorAdmin = IsAuthorAdmin(reply.User)
             });
         }
 
@@ -97,6 +104,12 @@ namespace WinnipegForum.Controllers
             _postService.Add(post).Wait();
 
             return RedirectToAction("Index", "Post", new { id = post.Id });
+        }
+
+        private bool IsAuthorAdmin(ApplicationUser user)
+        {
+            return _userManager.GetRolesAsync(user)
+                .Result.Contains("Admin");
         }
 
         private Post BuildPost(NewPostModel model, ApplicationUser user)

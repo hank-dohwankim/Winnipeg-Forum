@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using WinnipegForum.Data;
 using WinnipegForum.Data.Models;
@@ -13,9 +14,10 @@ namespace WinnipegForum.Controllers
         private readonly IForum _forumService;
         private readonly IPost _postService;
 
-        public ForumController(IForum forumService)
+        public ForumController(IForum forumService, IPost postService)
         {
             _forumService = forumService;
+            _postService = postService;
         }
 
         public IActionResult Index()
@@ -35,10 +37,12 @@ namespace WinnipegForum.Controllers
             return View(model);
         }
 
-        public IActionResult Subject(int id)
+        public IActionResult Subject(int id, string searchQuery)
         {
             var forum = _forumService.GetById(id);
-            var posts = forum.Posts;
+            var posts = new List<Post>();
+
+            posts = _postService.GetFilteredPosts(forum, searchQuery).ToList();
 
             var postListings = posts.Select(post => new PostListingModel { 
                 Id = post.Id,
@@ -57,6 +61,12 @@ namespace WinnipegForum.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Search(int id, string searchQuery)
+        {
+            return RedirectToAction("Subject", new { id, searchQuery });
         }
 
         private ForumListingModel BuildForumListing(Post post)

@@ -14,6 +14,10 @@ namespace WinnipegForum.Models.Post
         public int AuthorRating { get; set; }
         public DateTime Created { get; set; }
         public string PostContent { get; set; }
+        public bool IsAuthorAdmin { get; set; }
+
+        public int ForumId { get; set; }
+        public string ForumName { get; set; }
 
         public IEnumerable<PostReplyModel> PostReplies { get; set; }
         public IEnumerable<ReplyReplyModel> ReplyReplies { get; set; }

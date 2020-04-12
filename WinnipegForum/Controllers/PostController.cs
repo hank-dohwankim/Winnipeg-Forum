@@ -105,7 +105,7 @@ namespace WinnipegForum.Controllers
             var post = BuildPost(model, user);
 
             await _postService.Add(post);
-            await _userService.UpdateUserRating(userId, typeof(Post))
+            await _userService.UpdateUserRating(userId, typeof(Post));
 
             return RedirectToAction("Index", "Post", new { id = post.Id });
         }

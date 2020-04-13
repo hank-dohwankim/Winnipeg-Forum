@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinnipegForum.Data", "Winni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinnipegForum.Service", "WinnipegForum.Service\WinnipegForum.Service.csproj", "{09EE9329-847B-49BB-A49F-3103E281559A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinnipegForum.Test", "WinnipegForum.Test\WinnipegForum.Test.csproj", "{716F6C0A-081C-4739-A826-A13FFE2464DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{09EE9329-847B-49BB-A49F-3103E281559A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09EE9329-847B-49BB-A49F-3103E281559A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09EE9329-847B-49BB-A49F-3103E281559A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{716F6C0A-081C-4739-A826-A13FFE2464DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{716F6C0A-081C-4739-A826-A13FFE2464DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{716F6C0A-081C-4739-A826-A13FFE2464DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{716F6C0A-081C-4739-A826-A13FFE2464DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

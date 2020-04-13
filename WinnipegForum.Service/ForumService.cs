@@ -34,9 +34,17 @@ namespace WinnipegForum.Service
             return _dbContext.Forums.Include(forum => forum.Posts);
         }
 
-        public IEnumerable<ApplicationUser> GetAllActiveUsers()
+        public IEnumerable<ApplicationUser> GetAllActiveUsers(int id)
         {
-            throw new NotImplementedException();
+            var posts = GetById(id).Posts;
+            if(posts != null || !posts.Any())
+            {
+                var postUsers = posts.Select(p => p.User);
+                var replyUsers = posts.SelectMany(p => p.PostReplies).Select(r => r.User);
+                return postUsers.Union(replyUsers).Distinct();
+            }
+
+            return new List<ApplicationUser>();
         }
 
         public Forum GetById(int id)
@@ -48,6 +56,13 @@ namespace WinnipegForum.Service
                 .FirstOrDefault();
 
             return forum;
+        }
+
+        public bool hasRecentPost(int id)
+        {
+            const int hoursAgo = 12;
+            var window = DateTime.Now.AddHours(-hoursAgo);
+            return GetById(id).Posts.Any(post => post.Created > window);
         }
 
         public Task UpdateForumDescription(int forumId, string newDescription)

@@ -67,12 +67,15 @@ namespace WinnipegForum.Controllers
             return RedirectToAction("Detail", "Profile", new { id = userId });
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var profiles = _userService.GetAll()
                 .OrderByDescending(user => user.Rating)
                 .Select(u => new ProfileModel
                 {
+                    UserId = u.Id,
+                    UserName = u.UserName,
                     Email = u.Email,
                     ProfileImageUrl = u.ProfileImageUrl,
                     UserRating = u.Rating.ToString(),
@@ -88,9 +91,9 @@ namespace WinnipegForum.Controllers
             return View(model);
         }
 
-        public IActionResult Deactivate(string userId)
+        public IActionResult Deactivate(string id)
         {
-            var user = _userService.GetById(userId);
+            var user = _userService.GetById(id);
             _userService.Deactivate(user);
             return RedirectToAction("Index", "Profile");
         }

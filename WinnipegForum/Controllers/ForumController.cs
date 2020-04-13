@@ -111,11 +111,11 @@ namespace WinnipegForum.Controllers
         private CloudBlockBlob UploadForumImage(IFormFile file)
         {
             var connectionString = _configuration.GetConnectionString("AzureStorageAccount");
-            var container = _uploadService.GetBlobContainer(connectionString);
+            var container = _uploadService.GetBlobContainer(connectionString, "forum-images");
             var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             var filename = Path.Combine(parsedContentDisposition.FileName.Trim('"'));
             var blockBlob = container.GetBlockBlobReference(filename);
-            blockBlob.UploadFromStreamAsync(file.OpenReadStream());
+            blockBlob.UploadFromStreamAsync(file.OpenReadStream()).Wait();
 
             return blockBlob;
         }

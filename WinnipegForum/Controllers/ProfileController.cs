@@ -54,7 +54,7 @@ namespace WinnipegForum.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var connectionString = _configuration.GetConnectionString("AzureStorageAccount");
-            var container = _uploadService.GetBlobContainer(connectionString);
+            var container = _uploadService.GetBlobContainer(connectionString, "profile-images");
 
             var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
             var filename = Path.Combine(parsedContentDisposition.FileName.Trim('"'));

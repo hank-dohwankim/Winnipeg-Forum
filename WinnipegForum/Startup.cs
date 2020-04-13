@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using WinnipegForum.Data;
 using WinnipegForum.Service;
 using WinnipegForum.Data.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using WinnipegForum.Areas.Identity;
 
 namespace WinnipegForum
 {
@@ -30,9 +32,6 @@ namespace WinnipegForum
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -40,12 +39,13 @@ namespace WinnipegForum
             services.AddScoped<IPost, PostService>();
             services.AddScoped<IApplicationUser, ApplicationUserService>();
             services.AddScoped<IUpload, UploadService>();
+            services.AddSingleton<IEmailSender, EmailSender>();
             services.AddSingleton(Configuration);
-            services.AddTransient<DataSeeder>();
+            //services.AddTransient<DataSeeder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataSeeder dataSeeder)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*, DataSeeder dataSeeder*/)
         {
             if (env.IsDevelopment())
             {
@@ -59,7 +59,7 @@ namespace WinnipegForum
                 app.UseHsts();
             }
 
-            dataSeeder.SeedSuperUser().Wait();
+            //dataSeeder.SeedSuperUser().Wait();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

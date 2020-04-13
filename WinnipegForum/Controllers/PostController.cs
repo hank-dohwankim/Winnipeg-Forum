@@ -52,8 +52,6 @@ namespace WinnipegForum.Controllers
             return View(model);
         }
 
-       
-
         private IEnumerable<ReplyReplyModel> BuildReplyReplies(IEnumerable<ReplyReply> replyReplies)
         {
             return replyReplies.Select(reply => new ReplyReplyModel

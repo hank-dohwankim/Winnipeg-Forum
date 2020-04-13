@@ -58,11 +58,11 @@ namespace WinnipegForum.Service
 
             if(type == typeof(Post))
             {
-                inc = 1;
+                inc = 3;
             }
             if(type == typeof(PostReply))
             {
-                inc = 3;
+                inc = 1;
             }
             return userRating + inc;
         }
